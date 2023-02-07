@@ -48,3 +48,7 @@ QProgressBar::chunk {
     background-color: rgb(91, 101, 124);
     border-radius: 5px;
 }
+
+QStatusBar {
+    font: 8pt "Microsoft JhengHei";
+}

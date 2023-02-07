@@ -18,7 +18,7 @@ class MainWindow(QMainWindow):
         self.status_bar = QStatusBar()
 
         self.setWindowTitle("Video Downloader")
-        self.setMinimumSize(QSize(600, 100))
+        self.setFixedSize(QSize(600, 100))
         self.setStyleSheet(open(
             Path(__file__).parent.joinpath(f"themes/{self.theme}.qss"),
             "r"
@@ -32,15 +32,24 @@ class MainWindow(QMainWindow):
 
     def init_components(self):
         self.main_widget.progress_bar.setValue(0)
+        self.status_bar.showMessage("Ready")
 
     def register_delegation(self):
+        self.model.downloader.started.connect(
+            lambda: self.main_widget.download_button.setDisabled(True)
+        )
+        self.model.downloader.status_updated.connect(
+            lambda message: self.status_bar.showMessage(message)
+        )
+        self.model.downloader.progress_updated.connect(
+            lambda progress: self.main_widget.progress_bar.setValue(progress)
+        )
+        self.model.downloader.finished.connect(
+            lambda: self.main_widget.download_button.setDisabled(False)
+        )
         self.main_widget.download_button.clicked.connect(
-            lambda: self.model.download(
-                self.main_widget.url_text_edit.text(),
-                self.status_bar,
-                self.main_widget.progress_bar
-            )
-        ) # type: ignore
+            lambda: self.model.download(self.main_widget.url_text_edit.text())
+        )
 
     def closeEvent(self, event: QCloseEvent) -> None:
         return super().closeEvent(event)
