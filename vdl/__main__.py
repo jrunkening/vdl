@@ -1,12 +1,17 @@
 from PySide6.QtCore import QSize
-from PySide6.QtWidgets import QMainWindow, QApplication, QWidget, QPushButton, QLineEdit
+from PySide6.QtWidgets import QMainWindow, QApplication, QWidget
+from PySide6.QtWidgets import QLineEdit, QPushButton, QProgressBar
 from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout
 from PySide6.QtGui import QCloseEvent
 
 from yt_dlp import YoutubeDL
+import re
 
 
 class DownloadingLogger:
+    def __init__(self, progress_bar) -> None:
+        self.progress_bar = progress_bar
+
     def debug(self, msg):
         # For compatibility with youtube-dl, both debug and info are passed into debug
         # You can distinguish them by the prefix "[debug] "
@@ -16,13 +21,10 @@ class DownloadingLogger:
             self.info(msg)
 
     def info(self, msg):
-        if msg.startswith("[download] Destination"):
+        if re.match("^\[download\] *+(\d*%|\d*.\d*%)", msg):
+            progress_ratio = round(float(msg.split()[1][:-1]))
+            self.progress_bar.setValue(progress_ratio)
             print(msg)
-        elif msg.startswith("[download] "):
-            msg = msg.split()
-            progress_ratio = msg[1]
-            eta = msg[-1]
-            print(f"{progress_ratio[:-1]}, {eta}")
         else:
             print(msg)
 
@@ -43,18 +45,21 @@ class MainWidget(QWidget):
         self.download_button = QPushButton("Download")
         self.download_button.clicked.connect(self.download) # type: ignore
 
+        self.progress_bar = QProgressBar()
+
         layout = QVBoxLayout()
         layout.addWidget(self.url_text_edit)
         layout.addWidget(self.download_button)
+        layout.addWidget(self.progress_bar)
         self.setLayout(layout)
 
     def download(self):
         ydl_opts = {
             "format": "bestvideo+bestaudio/best",
-            "logger": DownloadingLogger(),
+            "logger": DownloadingLogger(self.progress_bar),
         }
         with YoutubeDL(ydl_opts) as ydl:
-            error_code = ydl.download(self.url_text_edit.text())
+            ydl.download(self.url_text_edit.text())
 
 
 class MainWindow(QMainWindow):
