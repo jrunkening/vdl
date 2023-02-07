@@ -50,5 +50,6 @@ QProgressBar::chunk {
 }
 
 QStatusBar {
+    background-color: rgb(43, 50, 61);
     font: 8pt "Microsoft JhengHei";
 }
