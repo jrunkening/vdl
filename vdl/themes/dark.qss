@@ -40,9 +40,11 @@ QProgressBar {
     background-color: rgb(33, 37, 43);
     border-radius: 5px;
     border: 2px solid rgb(33, 37, 43);
-	text-align: center;
+    height: 10px;
+    text-align: center;
+	font: 6pt "Microsoft JhengHei";
 }
 QProgressBar::chunk {
     background-color: rgb(91, 101, 124);
-	border-radius: 5px;
+    border-radius: 5px;
 }
