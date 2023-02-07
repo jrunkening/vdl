@@ -1,0 +1,48 @@
+QMainWindow {
+    background-color: rgb(40, 44, 52);
+}
+
+QWidget {
+    color: rgb(221, 221, 221);
+    font: 10pt "Microsoft JhengHei";
+}
+
+QLineEdit {
+    background-color: rgb(33, 37, 43);
+    border-radius: 5px;
+    border: 2px solid rgb(33, 37, 43);
+    padding-left: 4px;
+    selection-color: rgb(255, 255, 255);
+    selection-background-color: rgb(255, 121, 198);
+}
+QLineEdit:hover {
+    border: 2px solid rgb(64, 71, 88);
+}
+QLineEdit:focus {
+    border: 2px solid rgb(91, 101, 124);
+}
+
+QPushButton {
+    border: 2px solid rgb(52, 59, 72);
+    border-radius: 5px;
+    background-color: rgb(52, 59, 72);
+}
+QPushButton:hover {
+    background-color: rgb(57, 65, 80);
+    border: 2px solid rgb(61, 70, 86);
+}
+QPushButton:pressed {
+    background-color: rgb(35, 40, 49);
+    border: 2px solid rgb(43, 50, 61);
+}
+
+QProgressBar {
+    background-color: rgb(33, 37, 43);
+    border-radius: 5px;
+    border: 2px solid rgb(33, 37, 43);
+	text-align: center;
+}
+QProgressBar::chunk {
+    background-color: rgb(91, 101, 124);
+	border-radius: 5px;
+}

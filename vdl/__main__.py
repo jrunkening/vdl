@@ -1,8 +1,9 @@
+from pathlib import Path
+
 from PySide6.QtCore import QSize
 from PySide6.QtWidgets import QMainWindow, QApplication
 from PySide6.QtWidgets import QStatusBar
 from PySide6.QtGui import QCloseEvent
-
 
 from vdl.view.main_widget import MainWidget
 from vdl.model import Model
@@ -11,12 +12,18 @@ from vdl.model import Model
 class MainWindow(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
+        self.theme = "dark"
         self.main_widget = MainWidget()
         self.model = Model()
         self.status_bar = QStatusBar()
 
         self.setWindowTitle("Video Downloader")
         self.setMinimumSize(QSize(600, 100))
+        self.setStyleSheet(open(
+            Path(__file__).parent.joinpath(f"themes/{self.theme}.qss"),
+            "r"
+        ).read())
+
         self.setCentralWidget(self.main_widget)
         self.setStatusBar(self.status_bar)
 
