@@ -63,7 +63,7 @@ class MainWindow(QMainWindow):
         self.main_widget = MainWidget()
         # self.model = Model()
 
-        self.setWindowTitle("TDC200")
+        self.setWindowTitle("Video Downloader")
         self.setMinimumSize(QSize(400, 100))
         self.setCentralWidget(self.main_widget)
 
