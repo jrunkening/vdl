@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "vdl"
+version = "0.1.0"
+description = "Video downloader GUI"
+authors = ["JingYu Ning <115336923+jrunkening@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11, <3.12"
+pyside6 = "^6.4.2"
+yt-dlp = "^2023.1.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
